@@ -14,9 +14,15 @@ DEFINES += MEEGO \
     UUID \
     KCALCORE_FOR_MEEGO
 
-equals(QT_MAJOR_VERSION, 5) {
-    PKGCONFIG += timed-qt5
-    DEFINES += TIMED_SUPPORT
+system(pkg-config --exists timed-qt5) {
+    equals(QT_MAJOR_VERSION, 5) {
+        message("Has timed-qt5")
+        PKGCONFIG += timed-qt5
+        DEFINES += TIMED_SUPPORT
+    }
+}
+!system(pkg-config --exists timed-qt5) {
+    message(No timed-qt5)
 }
 
 QT += dbus
